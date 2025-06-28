@@ -7,7 +7,7 @@ This batch script (`CreateScheduledTask.bat`) allows you to automatically create
 - ⏱ Trigger on system **boot** or **user logon**
 - 🔐 Option to **run with highest privileges**
 - 🕒 Set a custom **delay time**
-- 👤 Run as SYSTEM or specific **username/password**
+- 👤 Run as Administrators or SYSTEM or specific **username/password**
 - 🔁 Automatically deletes existing task before creating new one
 
 ## 📂 Files
