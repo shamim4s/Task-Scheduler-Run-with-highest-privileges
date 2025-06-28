@@ -3,8 +3,8 @@ setlocal
 
 REM === Customize these variables ===
 set "TASK_NAME=Start FileServer"
-set "APPLICATION_PATH=C:\Users\Admin\Desktop\FilebrowserMonitor.exe"
-set "TASK_DESCRIPTION=Automatically starts FilebrowserMonitor.exe at boot"
+set "APPLICATION_PATH=C:\Windows\filebrowser\FilebrowserMonitor.exe"
+set "TASK_DESCRIPTION=Automatically starts FilebrowserMonitor at boot"
 set "TRIGGER_TYPE=boot"  REM options: boot, logon, daily, etc.
 set "DELAY_SECONDS=15"
 set "RUN_AS_USER=Administrators"  REM Use System or specify a username (e.g., Admin)
@@ -34,7 +34,16 @@ if /i "%RUN_WITH_HIGHEST_PRIVILEGES%"=="true" (
 )
 
 REM === Create the task ===
-if /i "%RUN_AS_USER%"=="System" (
+if /i "%RUN_AS_USER%"=="Administrators" (
+    schtasks /Create ^
+        /TN "%TASK_NAME%" ^
+        /TR "\"%APPLICATION_PATH%\"" ^
+        %TRIGGER_ARG% ^
+        /DELAY 0000:%DELAY_SECONDS% ^
+        /RU Administrators ^
+        %PRIVILEGE_ARG% ^
+        /F
+) else if /i "%RUN_AS_USER%"=="System" (
     schtasks /Create ^
         /TN "%TASK_NAME%" ^
         /TR "\"%APPLICATION_PATH%\"" ^
@@ -43,7 +52,7 @@ if /i "%RUN_AS_USER%"=="System" (
         /RU SYSTEM ^
         %PRIVILEGE_ARG% ^
         /F
-) else (
+    ) else  (
     schtasks /Create ^
         /TN "%TASK_NAME%" ^
         /TR "\"%APPLICATION_PATH%\"" ^
@@ -59,3 +68,4 @@ echo.
 echo Task "%TASK_NAME%" has been created successfully.
 endlocal
 pause
+
